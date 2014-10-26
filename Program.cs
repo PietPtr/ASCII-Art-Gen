@@ -18,6 +18,9 @@ namespace ASCII_art
 
         static Random rnd = new Random();
 
+        static int iconWidth = 12;
+        static int iconHeight = 13;
+
         static int randint(int low, int high)
         {
             return rnd.Next(low, high + 1);
@@ -101,7 +104,7 @@ namespace ASCII_art
             //Draw and save image:
 
             //create empty bitmap of the right size
-            Bitmap newBmp = new Bitmap(sourceImg.Width * 9, sourceImg.Height * 16);
+            Bitmap newBmp = new Bitmap(sourceImg.Width * iconWidth, sourceImg.Height * iconHeight);
 
             //drawing
             using (Graphics g = Graphics.FromImage(newBmp)) //not mine
@@ -113,7 +116,7 @@ namespace ASCII_art
                     for (int x = 0; x < sourceImg.Width; x++)
                     {
                         Icon icon = iconList[indices[x, y]];
-                        g.DrawImage(asciiImage, new Rectangle(x * 9, y * 16, 9, 16), new Rectangle((int)icon.position.X, (int)icon.position.Y, 9, 16), GraphicsUnit.Pixel);
+                        g.DrawImage(asciiImage, new Rectangle(x * iconWidth, y * iconHeight, iconWidth, iconHeight), new Rectangle((int)icon.position.X, (int)icon.position.Y, iconWidth, iconHeight), GraphicsUnit.Pixel);
                     }
                 }
             }
@@ -132,9 +135,9 @@ namespace ASCII_art
             {
                 for (int iconX = 0; iconX < 16; iconX++)
                 {
-                    int blacks = GetBlackPixels(iconX * 9, iconY * 16, (iconX + 1) * 9, (iconY + 1) * 16);
+                    int blacks = GetBlackPixels(iconX * iconWidth, iconY * iconHeight, (iconX + 1) * iconWidth, (iconY + 1) * iconHeight);
 
-                    iconList.Add(new Icon(new Vector2(iconX * 9, iconY * 16), blacks, (char)((iconY - 1) * 16 + iconX + 48)));
+                    iconList.Add(new Icon(new Vector2(iconX * iconWidth, iconY * iconHeight), blacks, (char)((iconY - 1) * iconHeight + iconX + 48)));
                 }
             }
 
